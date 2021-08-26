@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:rick_and_morty/core/error/exception.dart';
-import 'package:rick_and_morty/feature/data/models/person_mode.dart';
+import 'package:rick_and_morty/feature/data/models/person_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class PersonRemoteDataSource {
@@ -16,10 +16,10 @@ abstract class PersonRemoteDataSource {
   Future<List<PersonModel>> searchPersons(String queryName);
 }
 
-class PersonRemoteDataSourceImpl implements PersonRemoteDataSource {
+class MyPersonRemoteDataSource implements PersonRemoteDataSource {
   final http.Client client;
 
-  PersonRemoteDataSourceImpl({required this.client});
+  MyPersonRemoteDataSource({required this.client});
 
   @override
   Future<List<PersonModel>> getAllPersons(int page) => _getPersonsFromUrl(
