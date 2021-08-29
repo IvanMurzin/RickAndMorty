@@ -38,7 +38,6 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
     final List<String> jsonPersons =
         persons.map((person) => json.encode(person.toJson())).toList();
     sharedPreferences.setStringList(CACHED_PERSONS_LIST, jsonPersons);
-    print("persons to write cache:\n${jsonPersons}");
     return Future.value(jsonPersons);
   }
 }

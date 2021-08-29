@@ -17,7 +17,9 @@ class CharacterList extends StatelessWidget {
     return BlocBuilder<CharacterBloc, CharacterState>(
       builder: (context, state) {
         if (state is OnLoadedState) storage.addAll(state.persons);
-
+        characterBloc.checkNetworkConnectivity().then((success) {
+          if (!success) characterBloc.add(OnNetworkLoseEvent());
+        });
         return ListView.builder(
           itemCount: storage.length + 1,
           itemBuilder: (context, index) {

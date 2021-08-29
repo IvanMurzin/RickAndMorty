@@ -1,4 +1,3 @@
-import 'package:rick_and_morty/feature/data/datasoucres/person_local_data_source.dart';
 import 'package:rick_and_morty/feature/data/datasoucres/person_remoute_data_source.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/core/error/failure.dart';

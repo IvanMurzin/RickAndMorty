@@ -1,5 +1,5 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/feature/domain/repositories/person_repository.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/character_event.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/character_state.dart';
@@ -13,6 +13,15 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   @override
   Stream<CharacterState> mapEventToState(CharacterEvent event) async* {
     if (event is OnLoadNextEvent) page++;
+    if (event is OnNetworkLoseEvent) {
+      var isConnect = false;
+      while (!isConnect) {
+        checkNetworkConnectivity().then((result) {
+          isConnect = result;
+        });
+      }
+    }
+
     final result = await personRepository.getAllPersons(page);
     CharacterState state = OnExceptionState();
     result.fold(
@@ -22,5 +31,10 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       },
     );
     yield state;
+  }
+
+  Future<bool> checkNetworkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult != ConnectivityResult.none;
   }
 }
