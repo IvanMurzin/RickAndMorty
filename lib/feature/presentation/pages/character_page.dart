@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
@@ -30,10 +31,19 @@ class CharacterPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            Image(
+            CachedNetworkImage(
               width: 250,
               height: 250,
-              image: NetworkImage(person.image),
+              imageUrl: person.image,
+              placeholder: (context, url) => Center(
+                child: Container(
+                  width: 250,
+                  height: 250,
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+              errorWidget: (context, url, error) =>
+                  Image.asset("assets/images/error_image.jpg"),
             ),
             SizedBox(height: 15),
             Row(
